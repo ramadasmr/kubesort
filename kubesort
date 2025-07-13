@@ -1,0 +1,299 @@
+#!/bin/bash
+
+print_help_banner(){
+cat <<EOF
+Usage: ksort [object] <options>
+
+Objects:
+  pods      Sort Kubernetes pods
+  nodes     Sort Kubernetes nodes
+  pv        Sort Kubernetes persistent volumes
+  events    Sort Kubernetes events
+  services  Sort Kubernetes services
+
+Common options:
+  --byname                           Sort by name (pods, nodes, pv, services)
+  --bytime, --byage                  Sort by creation time/age
+  --bycpu                            Sort by cpu usage (pods, nodes)
+  --bymemory                         Sort by memory usage (pods, nodes)
+  --bysize                           Sort by disk size (pv, nodes)
+  --byrestart                        Sort by restartCount (pods only)
+  --bystatus                         Sort by status (pods, nodes, pv)
+
+Options for pods,events,services :
+  -n, -ns, --namespace <namespace>   Specify the namespace to use
+
+EOF
+}
+
+found_wrong_command_args(){
+    print_help_banner
+    exit 2
+}
+
+init_variables(){
+    NAMESPACE=""
+    SORTBYNAME=""
+    SORTBYTIME=""
+    SORTBYCPU=""
+    SORTBYMEMORY=""
+    SORTBYSIZE=""
+    SORTBYRESTART=""
+    SORTBYSTATUS=""
+    OBJECT=""
+    CMDOPTS=""
+    SORTKIND=""
+    SORTING=""
+}
+
+parse_args(){
+if [[ "$#" -gt 0 ]]; then
+    while true
+    do
+    if [ ! -z "$1" ]; then
+        case $1 in
+        -n|-ns|--ns|--namespace)
+            shift
+            NAMESPACE=$1
+            if [[ -z $NAMESPACE || $OBJECT == "nodes" || $OBJECT == "pv" ]]; then
+                CMDOPTS="$CMDOPTS"
+            else
+                CMDOPTS="$CMDOPTS -n $NAMESPACE"
+            fi
+            shift
+            ;;
+        --byname)
+            if [ -z "$SORTING" ]; then
+                SORTBYNAME=YES
+                SORTKIND="name"
+                SORTING=YES
+            else
+                MULTISORT=YES
+                echo "WARNING: Multilevel sorting not supported, will be added soon"
+            fi
+            shift
+            ;;
+        --bytime|--byage)
+            if [ -z "$SORTING" ]; then
+                SORTBYTIME=YES
+                SORTKIND="time/age"
+                SORTING=YES
+            else
+                MULTISORT=YES
+                echo "WARNING: Multilevel sorting not supported, will be added soon"
+            fi
+            shift
+            ;;
+        --bycpu)
+            if [ -z "$SORTING" ]; then
+                SORTBYCPU=YES
+                SORTKIND="cpu"
+                SORTING=YES
+            else
+                MULTISORT=YES
+                echo "WARNING: Multilevel sorting not supported, will be added soon"
+            fi
+            shift
+            ;;
+        --bymemory)
+            if [ -z "$SORTING" ]; then
+                SORTBYMEMORY=YES
+                SORTKIND="memory"
+                SORTING=YES
+            else
+                MULTISORT=YES
+                echo "WARNING: Multilevel sorting not supported, will be added soon"
+            fi
+            shift
+            ;;
+        --bysize)
+            if [ -z "$SORTING" ]; then
+                SORTBYSIZE=YES
+                SORTKIND="size"
+                SORTING=YES
+            else
+                MULTISORT=YES
+                echo "WARNING: Multilevel sorting not supported, will be added soon"
+            fi
+            shift
+            ;;
+        --byrestart)
+            if [ -z "$SORTING" ]; then
+                SORTBYRESTART=YES
+                SORTKIND="size"
+                SORTING=YES
+            else
+                MULTISORT=YES
+                echo "WARNING: Multilevel sorting not supported, will be added soon"
+            fi
+            shift
+            ;;
+        --bystatus)
+            if [ -z "$SORTING" ]; then
+                SORTBYSTATUS=YES
+                SORTKIND="size"
+                SORTING=YES
+            else
+                MULTISORT=YES
+                echo "WARNING: Multilevel sorting not supported, will be added soon"
+            fi
+            shift
+            ;;
+        pod|pods)
+            if [ -z "$OBJECT" ]; then
+                OBJECT=pods
+            else
+                echo "ERROR: cannot use arguments together with nodes, events, pv etc"
+                found_wrong_command_args
+            fi
+            shift
+            ;;
+        node|nodes)
+            if [ -z "$OBJECT" ]; then
+                OBJECT=nodes
+                #getrid of namespace
+                CMDOPTS=""
+            else
+                echo "ERROR: cannot use arguments together with pods, events, pv etc"
+                found_wrong_command_args
+            fi
+            shift
+            ;;
+        pv|volumes)
+            if [ -z "$OBJECT" ]; then
+                OBJECT=pv
+                #getrid of namespace
+                CMDOPTS=""
+            else
+                echo "ERROR: cannot use arguments together with pods, nodes, events etc"
+                found_wrong_command_args
+            fi
+            shift
+            ;;
+        event|events)
+            if [ -z "$OBJECT" ]; then
+                OBJECT=events
+                #getrid of namespace
+                CMDOPTS=""
+            else
+                echo "ERROR: cannot use arguments together with pods, nodes, pv etc"
+                found_wrong_command_args
+            fi
+            shift
+            ;;
+        service|services)
+            if [ -z "$OBJECT" ]; then
+                OBJECT=services
+                #getrid of namespace
+                CMDOPTS=""
+            else
+                echo "ERROR: cannot use arguments together with pods, nodes, pv etc"
+                found_wrong_command_args
+            fi
+            shift
+            ;;
+        -h|--help)
+            print_help_banner
+            exit 0
+            ;;
+        *)
+            echo "Invalid option: $1"
+            found_wrong_command_args
+            ;;
+        esac
+    else
+        break
+    fi
+    done
+    if ! [[  "${OBJECT}" == "pods" || "${OBJECT}" == "nodes" || "${OBJECT}" == "services" || "${OBJECT}" == "events" || "${OBJECT}" == "pv" ]]; then
+        echo "MISSING: Object type pods/nodes/services/events/pv."
+        echo ""
+        found_wrong_command_args
+    fi
+else
+    found_wrong_command_args
+fi
+}
+
+build_command_options(){
+    if [ -z "$SORTKIND" ]; then
+        echo "WARNING: No sort option provided, Default is --byname"
+        SORTBYNAME=YES
+    fi
+    if [ "$SORTBYNAME" == "YES" ]; then
+        ACTION="get"
+        SORTOPTS="$SORTOPTS --sort-by=.metadata.name"
+    fi
+    if [ "$SORTBYTIME" == "YES" ]; then
+        ACTION="get"
+        SORTOPTS="$SORTOPTS --sort-by=.metadata.creationTimestamp"
+    fi
+    if [ "$SORTBYCPU" == "YES" ]; then
+        ACTION="get"
+        if [ "$OBJECT" == "pods" ]; then
+            SORTOPTS="$SORTOPTS --sort-by=.spec.containers[0].resources.limits.cpu"
+        elif [ "$OBJECT" == "nodes" ]; then
+            SORTOPTS="$SORTOPTS --sort-by=.status.capacity.cpu"
+        else
+            echo "ERROR: --bycpu option is not supported for object $OBJECT"
+            found_wrong_command_args
+        fi
+    fi
+    if [ "$SORTBYMEMORY" == "YES" ]; then
+        ACTION="get"
+        if [ "$OBJECT" == "pods" ]; then
+            SORTOPTS="$SORTOPTS --sort-by=.spec.containers[0].resources.limits.memory"
+        elif [ "$OBJECT" == "nodes" ]; then
+            SORTOPTS="$SORTOPTS --sort-by=.status.capacity.memory"
+        else
+            echo "ERROR: --bymemory option is not supported for object $OBJECT"
+            found_wrong_command_args
+        fi
+    fi
+    if [ "$SORTBYSIZE" == "YES" ]; then
+        ACTION="get"
+        if [ "$OBJECT" == "pv" ]; then
+            SORTOPTS="$SORTOPTS --sort-by=.spec.capacity.storage"
+        elif [ "$OBJECT" == "nodes" ]; then
+            SORTOPTS="$SORTOPTS --sort-by=.status.capacity.ephemeral-storage"
+        else
+            echo "ERROR: --bysize option is not supported for object $OBJECT"
+            found_wrong_command_args
+        fi
+    fi
+    if [ "$SORTBYRESTART" == "YES" ]; then
+        ACTION="get"
+        if [ "$OBJECT" == "pods" ]; then
+            SORTOPTS="$SORTOPTS --sort-by=.status.containerStatuses[0].restartCount"
+        else
+            echo "ERROR: --byrestart option is not supported for object $OBJECT"
+            found_wrong_command_args
+        fi
+    fi
+    if [ "$SORTBYSTATUS" == "YES" ]; then
+        ACTION="get"
+        if [ "$OBJECT" == "pv" ]; then
+            SORTOPTS="$SORTOPTS --sort-by=.status.phase"
+        elif [ "$OBJECT" == "pods" ]; then
+            SORTOPTS="$SORTOPTS --sort-by=.status.phase"
+        else
+            echo "ERROR: --bystatus option is not supported for object $OBJECT"
+            found_wrong_command_args
+        fi
+    fi
+    if  [ "$MULTISORT" == "YES" ]; then
+        echo "WARNING: Sorting using first option provided - $SORTKIND"
+    fi
+}
+
+execute_command(){
+    echo "Executing: kubectl $CMDOPTS $ACTION $OBJECT $SORTOPTS"
+    #kubectl $CMDOPTS $ACTION $OBJECT $SORTOPTS
+}
+
+
+# Main
+init_variables
+parse_args $*
+build_command_options
+execute_command
