@@ -1,4 +1,4 @@
-## kubesort
+# kubesort
 ![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg) ![Shell](https://img.shields.io/badge/Made%20with-Bash-orange.svg) ![CI](https://img.shields.io/badge/CI-GitHub%20Actions-blueviolet) ![Unit Tests](https://img.shields.io/badge/Unit%20Tests-GitHub%20Actions-blueviolet) ![CI Status](https://github.com/ramadasmr/kubesort/actions/workflows/ci.yaml/badge.svg?branch=main) ![GitHub Stars](https://img.shields.io/github/stars/ramadasmr/kubesort?style=social)
 
 
@@ -20,13 +20,28 @@ Whether you're a developer, SRE, or DevOps engineer, `kubesort` makes it easier 
 
 #### 📥 Installation
 
-Install via `curl`:
+**Install via `curl`:**
 
 ```bash
 curl -sSL https://raw.githubusercontent.com/ramadasmr/kubesort/main/install.sh | bash
 ```
 
 This installs the kubesort command to /usr/local/bin. Make sure it’s in your PATH.
+
+**Manual Steps**
+
+```bash
+curl -L -o /usr/local/bin/kubesort https://raw.githubusercontent.com/ramadasmr/kubesort/refs/heads/main/kubesort
+chmod a+x /usr/local/bin/kubesort
+
+```
+
+**Verify installation**
+
+```bash
+kubesort --help
+```
+
 
 #### 🚀 Usage
 
