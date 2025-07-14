@@ -1,0 +1,96 @@
+## kubesort
+![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg) ![Shell](https://img.shields.io/badge/Made%20with-Bash-orange.svg) ![CI](https://img.shields.io/badge/CI-GitHub%20Actions-blueviolet) ![Unit Tests](https://img.shields.io/badge/Unit%20Tests-GitHub%20Actions-blueviolet) ![CI Status](https://github.com/ramadasmr/kubesort/actions/workflows/ci.yaml/badge.svg?branch=main) ![GitHub Stars](https://img.shields.io/github/stars/ramadasmr/kubesort?style=social)
+
+
+**kubesort** is a lightweight Bash utility that simplifies and extends `kubectl` commands by enabling flexible sorting of Kubernetes resources. It combines multiple common `kubectl` flags (like `--sort-by`) into a single intuitive cli command.
+
+Whether you're a developer, SRE, or DevOps engineer, `kubesort` makes it easier to view, filter, and analyze Kubernetes objects from the command line.
+
+---
+
+#### ✨ Features
+
+- 🔎 Sort Kubernetes objects (pods, nodes, pv, events, services)
+- 📊 Sort by CPU, memory, disk size, restarts, status, age, or name
+- 🧠 Smart context handling (e.g., skips namespace for cluster-level resources)
+- ✅ Simple and readable CLI output
+- 🧱 Built with native `kubectl` compatibility
+
+---
+
+#### 📥 Installation
+
+Install via `curl`:
+
+```bash
+curl -sSL https://raw.githubusercontent.com/ramadasmr/kubesort/main/install.sh | bash
+```
+
+This installs the kubesort command to /usr/local/bin. Make sure it’s in your PATH.
+
+#### 🚀 Usage
+
+```bash
+kubesort [object] <options>
+```
+
+##### Supported Objects
+- `pods` – Kubernetes Pods
+- `nodes` – Cluster Nodes
+- `pv` – Persistent Volumes
+- `events` – Cluster Events
+- `services` – Kubernetes Services
+
+##### Sort Options
+
+Common Sort Options
+
+| Option                | Description                               |
+|------------------------|-------------------------------------------|
+| `--byname`             | Sort by name                              |
+| `--bytime`, `--byage`  | Sort by creation time / age               |
+| `--bycpu`              | Sort by CPU usage (pods, nodes)       |
+| `--bymemory`           | Sort by memory usage (pods, nodes)    |
+| `--bysize`             | Sort by disk size (pv, nodes)         |
+| `--byrestart`          | Sort by restart count (pods only)     |
+| `--bystatus`           | Sort by status (pods, nodes, pv)    |
+
+Namespace Support
+These are valid for pods, events, and services:
+
+| Option                | Description                               |
+|------------------------|-------------------------------------------|
+| `--namespace`          | Specify the namespace to use  (pods, services, events)             |
+
+#### ✅ Examples
+
+```bash
+ksort pods --byage
+ksort nodes --bymemory
+ksort pv --bysize
+ksort pods -n kube-system --byrestart
+ksort services -n dev --byname
+```
+
+#### ℹ️ Notes
+- Only one sort option is supported per command.
+- Unsupported combinations (like --bycpu for services) will return a warning or error.
+- Outputs the actual kubectl command being run for clarity.
+
+#### 📄 License
+MIT License – feel free to use, share, and contribute.
+
+#### 🤝 Contributions
+PRs and issues are welcome to enhance sorting support, resource types, or flags.
+
+##### To Contribute
+
+1. Fork the repository
+2. Create a new branch: `git checkout -b feature/my-feature`
+3. Commit your changes
+4. Push to your fork: `git push origin feature/my-feature`
+5. Open a pull request
+
+##### Ideas to Improve
+- Add support for additional resource types
+- Add unit tests or linting
