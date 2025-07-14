@@ -50,13 +50,13 @@ parse_args(){
 if [[ "$#" -gt 0 ]]; then
     while true
     do
-    if [ ! -z "$1" ]; then
+    if [ -n "$1" ]; then
         case $1 in
         -n|-ns|--ns|--namespace)
             shift
             NAMESPACE=$1
             if [[ -z $NAMESPACE || $OBJECT == "nodes" || $OBJECT == "pv" ]]; then
-                CMDOPTS="$CMDOPTS"
+                :
             else
                 CMDOPTS="$CMDOPTS -n $NAMESPACE"
             fi
@@ -294,6 +294,6 @@ execute_command(){
 
 # Main
 init_variables
-parse_args $*
+parse_args "$@"
 build_command_options
 execute_command
