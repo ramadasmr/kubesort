@@ -25,56 +25,56 @@ setup() {
 # kubesort pods test cases
 #
 
-@test "[TEST] run with args pods without sorting" {
-    run kubesort pods
+@test "[TEST] dry run with args pods without sorting" {
+    run kubesort pods --dry
     [ "$status" -eq 0 ]
     [[ "$output" == *"WARNING: No sort option provided, Default is --byname"* ]]
 }
 
-@test "[TEST] run with args pods --byname" {
-    run kubesort pods --byname
+@test "[TEST] dry run with args pods --byname" {
+    run kubesort pods --byname --dry
     [ "$status" -eq 0 ]
     [[ "$output" == *"Executing: kubectl  get pods  --sort-by=.metadata.name"* ]]
 }
 
-@test "[TEST] run with args pods --bytime" {
-    run kubesort pods --bytime
+@test "[TEST] dry run with args pods --bytime" {
+    run kubesort pods --bytime --dry
     [ "$status" -eq 0 ]
     [[ "$output" == *"Executing: kubectl  get pods  --sort-by=.metadata.creationTimestamp"* ]]
 }
 
-@test "[TEST] run with args pods --byage" {
-    run kubesort pods --byage
+@test "[TEST] dry run with args pods --byage" {
+    run kubesort pods --byage --dry
     [ "$status" -eq 0 ]
     [[ "$output" == *"Executing: kubectl  get pods  --sort-by=.metadata.creationTimestamp"* ]]
 }
 
-@test "[TEST] run with args pods --bymemory" {
-    run kubesort pods --bymemory
+@test "[TEST] dry run with args pods --bymemory" {
+    run kubesort pods --bymemory --dry
     [ "$status" -eq 0 ]
     [[ "$output" == *"Executing: kubectl  get pods  --sort-by=.spec.containers[0].resources.limits.memory"* ]]
 }
 
-@test "[TEST] run with args pods --bycpu" {
-    run kubesort pods --bycpu
+@test "[TEST] dry run with args pods --bycpu" {
+    run kubesort pods --bycpu --dry
     [ "$status" -eq 0 ]
     [[ "$output" == *"Executing: kubectl  get pods  --sort-by=.spec.containers[0].resources.limits.cpu"* ]]
 }
 
-@test "[TEST] run with args pods --bystatus" {
-    run kubesort pods --bystatus
+@test "[TEST] dry run with args pods --bystatus" {
+    run kubesort pods --bystatus --dry
     [ "$status" -eq 0 ]
     [[ "$output" == *"Executing: kubectl  get pods  --sort-by=.status.phase"* ]]
 }
 
-@test "[TEST] run with args pods --byrestart" {
-    run kubesort pods --byrestart
+@test "[TEST] dry run with args pods --byrestart" {
+    run kubesort pods --byrestart --dry
     [ "$status" -eq 0 ]
     [[ "$output" == *"Executing: kubectl  get pods  --sort-by=.status.containerStatuses[0].restartCount"* ]]
 }
 
-@test "[TEST] run with args pods --bysize" {
-    run kubesort pods --bysize
+@test "[TEST] dry run with args pods --bysize" {
+    run kubesort pods --bysize --dry
     [ "$status" -eq 2 ]
     [[ "$output" == *"ERROR: --bysize option is not supported for object pods"* ]]
 }
@@ -84,56 +84,56 @@ setup() {
 #
 
 
-@test "[TEST] run with args nodes without sorting" {
-    run kubesort nodes
+@test "[TEST] dry run with args nodes without sorting" {
+    run kubesort nodes --dry
     [ "$status" -eq 0 ]
     [[ "$output" == *"WARNING: No sort option provided, Default is --byname"* ]]
 }
 
-@test "[TEST] run with args nodes --byname" {
-    run kubesort nodes --byname
+@test "[TEST] dry run with args nodes --byname" {
+    run kubesort nodes --byname --dry
     [ "$status" -eq 0 ]
     [[ "$output" == *"Executing: kubectl  get nodes  --sort-by=.metadata.name"* ]]
 }
 
-@test "[TEST] run with args nodes --bytime" {
-    run kubesort nodes --bytime
+@test "[TEST] dry run with args nodes --bytime" {
+    run kubesort nodes --bytime --dry
     [ "$status" -eq 0 ]
     [[ "$output" == *"Executing: kubectl  get nodes  --sort-by=.metadata.creationTimestamp"* ]]
 }
 
-@test "[TEST] run with args nodes --byage" {
-    run kubesort nodes --byage
+@test "[TEST] dry run with args nodes --byage" {
+    run kubesort nodes --byage --dry
     [ "$status" -eq 0 ]
     [[ "$output" == *"Executing: kubectl  get nodes  --sort-by=.metadata.creationTimestamp"* ]]
 }
 
-@test "[TEST] run with args nodes --bymemory" {
-    run kubesort nodes --bymemory
+@test "[TEST] dry run with args nodes --bymemory" {
+    run kubesort nodes --bymemory --dry
     [ "$status" -eq 0 ]
     [[ "$output" == *"Executing: kubectl  get nodes  --sort-by=.status.capacity.memory"* ]]
 }
 
-@test "[TEST] run with args nodes --bycpu" {
-    run kubesort nodes --bycpu
+@test "[TEST] dry run with args nodes --bycpu" {
+    run kubesort nodes --bycpu --dry
     [ "$status" -eq 0 ]
     [[ "$output" == *"Executing: kubectl  get nodes  --sort-by=.status.capacity.cpu"* ]]
 }
 
-@test "[TEST] run with args nodes --bysize" {
-    run kubesort nodes --bysize
+@test "[TEST] dry run with args nodes --bysize" {
+    run kubesort nodes --bysize --dry
     [ "$status" -eq 0 ]
     [[ "$output" == *"Executing: kubectl  get nodes  --sort-by=.status.capacity.ephemeral-storage"* ]]
 }
 
-@test "[TEST] run with args nodes --bystatus" {
-    run kubesort nodes --bystatus
+@test "[TEST] dry run with args nodes --bystatus" {
+    run kubesort nodes --bystatus --dry
     [ "$status" -eq 2 ]
     [[ "$output" == *"ERROR: --bystatus option is not supported for object nodes"* ]]
 }
 
-@test "[TEST] run with args nodes --byrestart" {
-    run kubesort nodes --byrestart
+@test "[TEST] dry run with args nodes --byrestart" {
+    run kubesort nodes --byrestart --dry
     [ "$status" -eq 2 ]
     [[ "$output" == *"ERROR: --byrestart option is not supported for object nodes"* ]]
 }
@@ -144,56 +144,56 @@ setup() {
 #
 
 
-@test "[TEST] run with args services without sorting" {
-    run kubesort services
+@test "[TEST] dry run with args services without sorting" {
+    run kubesort services --dry
     [ "$status" -eq 0 ]
     [[ "$output" == *"WARNING: No sort option provided, Default is --byname"* ]]
 }
 
-@test "[TEST] run with args services --byname" {
-    run kubesort services --byname
+@test "[TEST] dry run with args services --byname" {
+    run kubesort services --byname --dry
     [ "$status" -eq 0 ]
     [[ "$output" == *"Executing: kubectl  get services  --sort-by=.metadata.name"* ]]
 }
 
-@test "[TEST] run with args services --bytime" {
-    run kubesort services --bytime
+@test "[TEST] dry run with args services --bytime" {
+    run kubesort services --bytime --dry
     [ "$status" -eq 0 ]
     [[ "$output" == *"Executing: kubectl  get services  --sort-by=.metadata.creationTimestamp"* ]]
 }
 
-@test "[TEST] run with args services --byage" {
-    run kubesort services --byage
+@test "[TEST] dry run with args services --byage" {
+    run kubesort services --byage --dry
     [ "$status" -eq 0 ]
     [[ "$output" == *"Executing: kubectl  get services  --sort-by=.metadata.creationTimestamp"* ]]
 }
 
-@test "[TEST] run with args services --bysize" {
-    run kubesort services --bysize
+@test "[TEST] dry run with args services --bysize" {
+    run kubesort services --bysize --dry
     [ "$status" -eq 2 ]
     [[ "$output" == *"ERROR: --bysize option is not supported for object services"* ]]
 }
 
-@test "[TEST] run with args services --bystatus" {
-    run kubesort services --bystatus
+@test "[TEST] dry run with args services --bystatus" {
+    run kubesort services --bystatus --dry
     [ "$status" -eq 2 ]
     [[ "$output" == *"ERROR: --bystatus option is not supported for object services"* ]]
 }
 
-@test "[TEST] run with args services --bycpu" {
-    run kubesort services --bycpu
+@test "[TEST] dry run with args services --bycpu" {
+    run kubesort services --bycpu --dry
     [ "$status" -eq 2 ]
     [[ "$output" == *"ERROR: --bycpu option is not supported for object services"* ]]
 }
 
-@test "[TEST] run with args services --bymemory" {
-    run kubesort services --bymemory
+@test "[TEST] dry run with args services --bymemory" {
+    run kubesort services --bymemory --dry
     [ "$status" -eq 2 ]
     [[ "$output" == *"ERROR: --bymemory option is not supported for object services"* ]]
 }
 
-@test "[TEST] run with args services --byrestart" {
-    run kubesort services --byrestart
+@test "[TEST] dry run with args services --byrestart" {
+    run kubesort services --byrestart --dry
     [ "$status" -eq 2 ]
     [[ "$output" == *"ERROR: --byrestart option is not supported for object services"* ]]
 }
@@ -205,56 +205,56 @@ setup() {
 #
 
 
-@test "[TEST] run with args pv without sorting" {
-    run kubesort pv
+@test "[TEST] dry run with args pv without sorting" {
+    run kubesort pv --dry
     [ "$status" -eq 0 ]
     [[ "$output" == *"WARNING: No sort option provided, Default is --byname"* ]]
 }
 
-@test "[TEST] run with args pv --byname" {
-    run kubesort pv --byname
+@test "[TEST] dry run with args pv --byname" {
+    run kubesort pv --byname --dry
     [ "$status" -eq 0 ]
     [[ "$output" == *"Executing: kubectl  get pv  --sort-by=.metadata.name"* ]]
 }
 
-@test "[TEST] run with args pv --bytime" {
-    run kubesort pv --bytime
+@test "[TEST] dry run with args pv --bytime" {
+    run kubesort pv --bytime --dry
     [ "$status" -eq 0 ]
     [[ "$output" == *"Executing: kubectl  get pv  --sort-by=.metadata.creationTimestamp"* ]]
 }
 
-@test "[TEST] run with args pv --byage" {
-    run kubesort pv --byage
+@test "[TEST] dry run with args pv --byage" {
+    run kubesort pv --byage --dry
     [ "$status" -eq 0 ]
     [[ "$output" == *"Executing: kubectl  get pv  --sort-by=.metadata.creationTimestamp"* ]]
 }
 
-@test "[TEST] run with args pv --bysize" {
-    run kubesort pv --bysize
+@test "[TEST] dry run with args pv --bysize" {
+    run kubesort pv --bysize --dry
     [ "$status" -eq 0 ]
     [[ "$output" == *"Executing: kubectl  get pv  --sort-by=.spec.capacity.storage"* ]]
 }
 
-@test "[TEST] run with args pv --bystatus" {
-    run kubesort pv --bystatus
+@test "[TEST] dry run with args pv --bystatus" {
+    run kubesort pv --bystatus --dry
     [ "$status" -eq 0 ]
     [[ "$output" == *"Executing: kubectl  get pv  --sort-by=.status.phase"* ]]
 }
 
-@test "[TEST] run with args pv --bycpu" {
-    run kubesort pv --bycpu
+@test "[TEST] dry run with args pv --bycpu" {
+    run kubesort pv --bycpu --dry
     [ "$status" -eq 2 ]
     [[ "$output" == *"ERROR: --bycpu option is not supported for object pv"* ]]
 }
 
-@test "[TEST] run with args pv --bymemory" {
-    run kubesort pv --bymemory
+@test "[TEST] dry run with args pv --bymemory" {
+    run kubesort pv --bymemory --dry
     [ "$status" -eq 2 ]
     [[ "$output" == *"ERROR: --bymemory option is not supported for object pv"* ]]
 }
 
-@test "[TEST] run with args pv --byrestart" {
-    run kubesort pv --byrestart
+@test "[TEST] dry run with args pv --byrestart" {
+    run kubesort pv --byrestart --dry
     [ "$status" -eq 2 ]
     [[ "$output" == *"ERROR: --byrestart option is not supported for object pv"* ]]
 }
@@ -265,56 +265,56 @@ setup() {
 #
 
 
-@test "[TEST] run with args events without sorting" {
-    run kubesort events
+@test "[TEST] dry run with args events without sorting" {
+    run kubesort events --dry
     [ "$status" -eq 0 ]
     [[ "$output" == *"WARNING: No sort option provided, Default is --byname"* ]]
 }
 
-@test "[TEST] run with args events --byname" {
-    run kubesort events --byname
+@test "[TEST] dry run with args events --byname" {
+    run kubesort events --byname --dry
     [ "$status" -eq 0 ]
     [[ "$output" == *"Executing: kubectl  get events  --sort-by=.metadata.name"* ]]
 }
 
-@test "[TEST] run with args events --bytime" {
-    run kubesort events --bytime
+@test "[TEST] dry run with args events --bytime" {
+    run kubesort events --bytime --dry
     [ "$status" -eq 0 ]
     [[ "$output" == *"Executing: kubectl  get events  --sort-by=.metadata.creationTimestamp"* ]]
 }
 
-@test "[TEST] run with args events --byage" {
-    run kubesort events --byage
+@test "[TEST] dry run with args events --byage" {
+    run kubesort events --byage --dry
     [ "$status" -eq 0 ]
     [[ "$output" == *"Executing: kubectl  get events  --sort-by=.metadata.creationTimestamp"* ]]
 }
 
-@test "[TEST] run with args events --bysize" {
-    run kubesort events --bysize
+@test "[TEST] dry run with args events --bysize" {
+    run kubesort events --bysize --dry
     [ "$status" -eq 2 ]
     [[ "$output" == *"ERROR: --bysize option is not supported for object events"* ]]
 }
 
-@test "[TEST] run with args events --bystatus" {
-    run kubesort events --bystatus
+@test "[TEST] dry run with args events --bystatus" {
+    run kubesort events --bystatus --dry
     [ "$status" -eq 2 ]
     [[ "$output" == *"ERROR: --bystatus option is not supported for object events"* ]]
 }
 
-@test "[TEST] run with args events --bycpu" {
-    run kubesort events --bycpu
+@test "[TEST] dry run with args events --bycpu" {
+    run kubesort events --bycpu --dry
     [ "$status" -eq 2 ]
     [[ "$output" == *"ERROR: --bycpu option is not supported for object events"* ]]
 }
 
-@test "[TEST] run with args events --bymemory" {
-    run kubesort events --bymemory
+@test "[TEST] dry run with args events --bymemory" {
+    run kubesort events --bymemory --dry
     [ "$status" -eq 2 ]
     [[ "$output" == *"ERROR: --bymemory option is not supported for object events"* ]]
 }
 
-@test "[TEST] run with args events --byrestart" {
-    run kubesort events --byrestart
+@test "[TEST] dry run with args events --byrestart" {
+    run kubesort events --byrestart --dry
     [ "$status" -eq 2 ]
     [[ "$output" == *"ERROR: --byrestart option is not supported for object events"* ]]
 }

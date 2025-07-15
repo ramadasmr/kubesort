@@ -1,8 +1,9 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -e
 
 print_help_banner(){
 cat <<EOF
-Usage: ksort [object] <options>
+Usage: kubesort [object] <options>
 
 Objects:
   pods      Sort Kubernetes pods
@@ -19,6 +20,9 @@ Common options:
   --bysize                           Sort by disk size (pv, nodes)
   --byrestart                        Sort by restartCount (pods only)
   --bystatus                         Sort by status (pods, nodes, pv)
+
+  --debug, --verbose, -v             Enable verbose/debug output
+  --dry                              Dry run, to show commands without executing
 
 Options for pods,events,services :
   -n, -ns, --namespace <namespace>   Specify the namespace to use
@@ -44,6 +48,7 @@ init_variables(){
     CMDOPTS=""
     SORTKIND=""
     SORTING=""
+    DRYRUN=""
 }
 
 parse_args(){
@@ -192,6 +197,10 @@ if [[ "$#" -gt 0 ]]; then
             fi
             shift
             ;;
+        --dry)
+            DRYRUN=YES
+            shift
+            ;;
         -h|--help)
             print_help_banner
             exit 0
@@ -288,7 +297,11 @@ build_command_options(){
 
 execute_command(){
     echo "Executing: kubectl $CMDOPTS $ACTION $OBJECT $SORTOPTS"
-    #kubectl $CMDOPTS $ACTION $OBJECT $SORTOPTS
+    if [ "$DRYRUN" == "YES" ]; then
+        echo "DRY RUN: Skipping command execution"
+    else
+        kubectl "$CMDOPTS" "$ACTION" "$OBJECT" "$SORTOPTS"
+    fi
 }
 
 
