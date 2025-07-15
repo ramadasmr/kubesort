@@ -300,7 +300,7 @@ execute_command(){
     if [ "$DRYRUN" == "YES" ]; then
         echo "DRY RUN: Skipping command execution"
     else
-        kubectl $CMDOPTS $ACTION $OBJECT $SORTOPTS
+        kubectl "$CMDOPTS" "$ACTION" "$OBJECT" "$SORTOPTS"
     fi
 }
 
