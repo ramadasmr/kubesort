@@ -45,10 +45,11 @@ init_variables(){
     SORTBYRESTART=""
     SORTBYSTATUS=""
     OBJECT=""
-    CMDOPTS=""
     SORTKIND=""
     SORTING=""
     DRYRUN=""
+    SORTOPTS=()
+    CMDOPTS=()
 }
 
 parse_args(){
@@ -59,11 +60,16 @@ if [[ "$#" -gt 0 ]]; then
         case $1 in
         -n|-ns|--ns|--namespace)
             shift
-            NAMESPACE=$1
+            if [ -z "$1" ]; then
+                echo "MISSING: specify a namespace"
+                found_wrong_command_args
+            else
+                NAMESPACE=$1
+            fi
             if [[ -z $NAMESPACE || $OBJECT == "nodes" || $OBJECT == "pv" ]]; then
                 :
             else
-                CMDOPTS="$CMDOPTS -n $NAMESPACE"
+                CMDOPTS+=(-n "$NAMESPACE")
             fi
             shift
             ;;
@@ -157,7 +163,7 @@ if [[ "$#" -gt 0 ]]; then
             if [ -z "$OBJECT" ]; then
                 OBJECT=nodes
                 #getrid of namespace
-                CMDOPTS=""
+                CMDOPTS=()
             else
                 echo "ERROR: cannot use arguments together with pods, events, pv etc"
                 found_wrong_command_args
@@ -168,7 +174,7 @@ if [[ "$#" -gt 0 ]]; then
             if [ -z "$OBJECT" ]; then
                 OBJECT=pv
                 #getrid of namespace
-                CMDOPTS=""
+                CMDOPTS=()
             else
                 echo "ERROR: cannot use arguments together with pods, nodes, events etc"
                 found_wrong_command_args
@@ -179,7 +185,7 @@ if [[ "$#" -gt 0 ]]; then
             if [ -z "$OBJECT" ]; then
                 OBJECT=events
                 #getrid of namespace
-                CMDOPTS=""
+                CMDOPTS=()
             else
                 echo "ERROR: cannot use arguments together with pods, nodes, pv etc"
                 found_wrong_command_args
@@ -190,7 +196,7 @@ if [[ "$#" -gt 0 ]]; then
             if [ -z "$OBJECT" ]; then
                 OBJECT=services
                 #getrid of namespace
-                CMDOPTS=""
+                CMDOPTS=()
             else
                 echo "ERROR: cannot use arguments together with pods, nodes, pv etc"
                 found_wrong_command_args
@@ -231,18 +237,18 @@ build_command_options(){
     fi
     if [ "$SORTBYNAME" == "YES" ]; then
         ACTION="get"
-        SORTOPTS="$SORTOPTS --sort-by=.metadata.name"
+        SORTOPTS+=(--sort-by=.metadata.name)
     fi
     if [ "$SORTBYTIME" == "YES" ]; then
         ACTION="get"
-        SORTOPTS="$SORTOPTS --sort-by=.metadata.creationTimestamp"
+        SORTOPTS+=(--sort-by=.metadata.creationTimestamp)
     fi
     if [ "$SORTBYCPU" == "YES" ]; then
         ACTION="get"
         if [ "$OBJECT" == "pods" ]; then
-            SORTOPTS="$SORTOPTS --sort-by=.spec.containers[0].resources.limits.cpu"
+            SORTOPTS+=(--sort-by=.spec.containers[0].resources.limits.cpu)
         elif [ "$OBJECT" == "nodes" ]; then
-            SORTOPTS="$SORTOPTS --sort-by=.status.capacity.cpu"
+            SORTOPTS+=(--sort-by=.status.capacity.cpu)
         else
             echo "ERROR: --bycpu option is not supported for object $OBJECT"
             found_wrong_command_args
@@ -251,9 +257,9 @@ build_command_options(){
     if [ "$SORTBYMEMORY" == "YES" ]; then
         ACTION="get"
         if [ "$OBJECT" == "pods" ]; then
-            SORTOPTS="$SORTOPTS --sort-by=.spec.containers[0].resources.limits.memory"
+            SORTOPTS+=(--sort-by=.spec.containers[0].resources.limits.memory)
         elif [ "$OBJECT" == "nodes" ]; then
-            SORTOPTS="$SORTOPTS --sort-by=.status.capacity.memory"
+            SORTOPTS+=(--sort-by=.status.capacity.memory)
         else
             echo "ERROR: --bymemory option is not supported for object $OBJECT"
             found_wrong_command_args
@@ -262,9 +268,9 @@ build_command_options(){
     if [ "$SORTBYSIZE" == "YES" ]; then
         ACTION="get"
         if [ "$OBJECT" == "pv" ]; then
-            SORTOPTS="$SORTOPTS --sort-by=.spec.capacity.storage"
+            SORTOPTS+=(--sort-by=.spec.capacity.storage)
         elif [ "$OBJECT" == "nodes" ]; then
-            SORTOPTS="$SORTOPTS --sort-by=.status.capacity.ephemeral-storage"
+            SORTOPTS+=(--sort-by=.status.capacity.ephemeral-storage)
         else
             echo "ERROR: --bysize option is not supported for object $OBJECT"
             found_wrong_command_args
@@ -273,7 +279,7 @@ build_command_options(){
     if [ "$SORTBYRESTART" == "YES" ]; then
         ACTION="get"
         if [ "$OBJECT" == "pods" ]; then
-            SORTOPTS="$SORTOPTS --sort-by=.status.containerStatuses[0].restartCount"
+            SORTOPTS+=(--sort-by=.status.containerStatuses[0].restartCount)
         else
             echo "ERROR: --byrestart option is not supported for object $OBJECT"
             found_wrong_command_args
@@ -282,9 +288,9 @@ build_command_options(){
     if [ "$SORTBYSTATUS" == "YES" ]; then
         ACTION="get"
         if [ "$OBJECT" == "pv" ]; then
-            SORTOPTS="$SORTOPTS --sort-by=.status.phase"
+            SORTOPTS+=(--sort-by=.status.phase)
         elif [ "$OBJECT" == "pods" ]; then
-            SORTOPTS="$SORTOPTS --sort-by=.status.phase"
+            SORTOPTS+=(--sort-by=.status.phase)
         else
             echo "ERROR: --bystatus option is not supported for object $OBJECT"
             found_wrong_command_args
@@ -296,11 +302,11 @@ build_command_options(){
 }
 
 execute_command(){
-    echo "Executing: kubectl $CMDOPTS $ACTION $OBJECT $SORTOPTS"
+    echo "Executing: kubectl ${CMDOPTS[*]} $ACTION $OBJECT ${SORTOPTS[*]}"
     if [ "$DRYRUN" == "YES" ]; then
         echo "DRY RUN: Skipping command execution"
     else
-        kubectl "$CMDOPTS" "$ACTION" "$OBJECT" "$SORTOPTS"
+        kubectl "${CMDOPTS[@]}" "$ACTION" "$OBJECT" "${SORTOPTS[@]}"
     fi
 }
 

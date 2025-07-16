@@ -34,43 +34,43 @@ setup() {
 @test "[TEST] dry run with args pods --byname" {
     run kubesort pods --byname --dry
     [ "$status" -eq 0 ]
-    [[ "$output" == *"Executing: kubectl  get pods  --sort-by=.metadata.name"* ]]
+    [[ "$output" == *"Executing: kubectl  get pods --sort-by=.metadata.name"* ]]
 }
 
 @test "[TEST] dry run with args pods --bytime" {
     run kubesort pods --bytime --dry
     [ "$status" -eq 0 ]
-    [[ "$output" == *"Executing: kubectl  get pods  --sort-by=.metadata.creationTimestamp"* ]]
+    [[ "$output" == *"Executing: kubectl  get pods --sort-by=.metadata.creationTimestamp"* ]]
 }
 
 @test "[TEST] dry run with args pods --byage" {
     run kubesort pods --byage --dry
     [ "$status" -eq 0 ]
-    [[ "$output" == *"Executing: kubectl  get pods  --sort-by=.metadata.creationTimestamp"* ]]
+    [[ "$output" == *"Executing: kubectl  get pods --sort-by=.metadata.creationTimestamp"* ]]
 }
 
 @test "[TEST] dry run with args pods --bymemory" {
     run kubesort pods --bymemory --dry
     [ "$status" -eq 0 ]
-    [[ "$output" == *"Executing: kubectl  get pods  --sort-by=.spec.containers[0].resources.limits.memory"* ]]
+    [[ "$output" == *"Executing: kubectl  get pods --sort-by=.spec.containers[0].resources.limits.memory"* ]]
 }
 
 @test "[TEST] dry run with args pods --bycpu" {
     run kubesort pods --bycpu --dry
     [ "$status" -eq 0 ]
-    [[ "$output" == *"Executing: kubectl  get pods  --sort-by=.spec.containers[0].resources.limits.cpu"* ]]
+    [[ "$output" == *"Executing: kubectl  get pods --sort-by=.spec.containers[0].resources.limits.cpu"* ]]
 }
 
 @test "[TEST] dry run with args pods --bystatus" {
     run kubesort pods --bystatus --dry
     [ "$status" -eq 0 ]
-    [[ "$output" == *"Executing: kubectl  get pods  --sort-by=.status.phase"* ]]
+    [[ "$output" == *"Executing: kubectl  get pods --sort-by=.status.phase"* ]]
 }
 
 @test "[TEST] dry run with args pods --byrestart" {
     run kubesort pods --byrestart --dry
     [ "$status" -eq 0 ]
-    [[ "$output" == *"Executing: kubectl  get pods  --sort-by=.status.containerStatuses[0].restartCount"* ]]
+    [[ "$output" == *"Executing: kubectl  get pods --sort-by=.status.containerStatuses[0].restartCount"* ]]
 }
 
 @test "[TEST] dry run with args pods --bysize" {
@@ -93,37 +93,37 @@ setup() {
 @test "[TEST] dry run with args nodes --byname" {
     run kubesort nodes --byname --dry
     [ "$status" -eq 0 ]
-    [[ "$output" == *"Executing: kubectl  get nodes  --sort-by=.metadata.name"* ]]
+    [[ "$output" == *"Executing: kubectl  get nodes --sort-by=.metadata.name"* ]]
 }
 
 @test "[TEST] dry run with args nodes --bytime" {
     run kubesort nodes --bytime --dry
     [ "$status" -eq 0 ]
-    [[ "$output" == *"Executing: kubectl  get nodes  --sort-by=.metadata.creationTimestamp"* ]]
+    [[ "$output" == *"Executing: kubectl  get nodes --sort-by=.metadata.creationTimestamp"* ]]
 }
 
 @test "[TEST] dry run with args nodes --byage" {
     run kubesort nodes --byage --dry
     [ "$status" -eq 0 ]
-    [[ "$output" == *"Executing: kubectl  get nodes  --sort-by=.metadata.creationTimestamp"* ]]
+    [[ "$output" == *"Executing: kubectl  get nodes --sort-by=.metadata.creationTimestamp"* ]]
 }
 
 @test "[TEST] dry run with args nodes --bymemory" {
     run kubesort nodes --bymemory --dry
     [ "$status" -eq 0 ]
-    [[ "$output" == *"Executing: kubectl  get nodes  --sort-by=.status.capacity.memory"* ]]
+    [[ "$output" == *"Executing: kubectl  get nodes --sort-by=.status.capacity.memory"* ]]
 }
 
 @test "[TEST] dry run with args nodes --bycpu" {
     run kubesort nodes --bycpu --dry
     [ "$status" -eq 0 ]
-    [[ "$output" == *"Executing: kubectl  get nodes  --sort-by=.status.capacity.cpu"* ]]
+    [[ "$output" == *"Executing: kubectl  get nodes --sort-by=.status.capacity.cpu"* ]]
 }
 
 @test "[TEST] dry run with args nodes --bysize" {
     run kubesort nodes --bysize --dry
     [ "$status" -eq 0 ]
-    [[ "$output" == *"Executing: kubectl  get nodes  --sort-by=.status.capacity.ephemeral-storage"* ]]
+    [[ "$output" == *"Executing: kubectl  get nodes --sort-by=.status.capacity.ephemeral-storage"* ]]
 }
 
 @test "[TEST] dry run with args nodes --bystatus" {
@@ -153,19 +153,19 @@ setup() {
 @test "[TEST] dry run with args services --byname" {
     run kubesort services --byname --dry
     [ "$status" -eq 0 ]
-    [[ "$output" == *"Executing: kubectl  get services  --sort-by=.metadata.name"* ]]
+    [[ "$output" == *"Executing: kubectl  get services --sort-by=.metadata.name"* ]]
 }
 
 @test "[TEST] dry run with args services --bytime" {
     run kubesort services --bytime --dry
     [ "$status" -eq 0 ]
-    [[ "$output" == *"Executing: kubectl  get services  --sort-by=.metadata.creationTimestamp"* ]]
+    [[ "$output" == *"Executing: kubectl  get services --sort-by=.metadata.creationTimestamp"* ]]
 }
 
 @test "[TEST] dry run with args services --byage" {
     run kubesort services --byage --dry
     [ "$status" -eq 0 ]
-    [[ "$output" == *"Executing: kubectl  get services  --sort-by=.metadata.creationTimestamp"* ]]
+    [[ "$output" == *"Executing: kubectl  get services --sort-by=.metadata.creationTimestamp"* ]]
 }
 
 @test "[TEST] dry run with args services --bysize" {
@@ -214,31 +214,31 @@ setup() {
 @test "[TEST] dry run with args pv --byname" {
     run kubesort pv --byname --dry
     [ "$status" -eq 0 ]
-    [[ "$output" == *"Executing: kubectl  get pv  --sort-by=.metadata.name"* ]]
+    [[ "$output" == *"Executing: kubectl  get pv --sort-by=.metadata.name"* ]]
 }
 
 @test "[TEST] dry run with args pv --bytime" {
     run kubesort pv --bytime --dry
     [ "$status" -eq 0 ]
-    [[ "$output" == *"Executing: kubectl  get pv  --sort-by=.metadata.creationTimestamp"* ]]
+    [[ "$output" == *"Executing: kubectl  get pv --sort-by=.metadata.creationTimestamp"* ]]
 }
 
 @test "[TEST] dry run with args pv --byage" {
     run kubesort pv --byage --dry
     [ "$status" -eq 0 ]
-    [[ "$output" == *"Executing: kubectl  get pv  --sort-by=.metadata.creationTimestamp"* ]]
+    [[ "$output" == *"Executing: kubectl  get pv --sort-by=.metadata.creationTimestamp"* ]]
 }
 
 @test "[TEST] dry run with args pv --bysize" {
     run kubesort pv --bysize --dry
     [ "$status" -eq 0 ]
-    [[ "$output" == *"Executing: kubectl  get pv  --sort-by=.spec.capacity.storage"* ]]
+    [[ "$output" == *"Executing: kubectl  get pv --sort-by=.spec.capacity.storage"* ]]
 }
 
 @test "[TEST] dry run with args pv --bystatus" {
     run kubesort pv --bystatus --dry
     [ "$status" -eq 0 ]
-    [[ "$output" == *"Executing: kubectl  get pv  --sort-by=.status.phase"* ]]
+    [[ "$output" == *"Executing: kubectl  get pv --sort-by=.status.phase"* ]]
 }
 
 @test "[TEST] dry run with args pv --bycpu" {
@@ -274,19 +274,19 @@ setup() {
 @test "[TEST] dry run with args events --byname" {
     run kubesort events --byname --dry
     [ "$status" -eq 0 ]
-    [[ "$output" == *"Executing: kubectl  get events  --sort-by=.metadata.name"* ]]
+    [[ "$output" == *"Executing: kubectl  get events --sort-by=.metadata.name"* ]]
 }
 
 @test "[TEST] dry run with args events --bytime" {
     run kubesort events --bytime --dry
     [ "$status" -eq 0 ]
-    [[ "$output" == *"Executing: kubectl  get events  --sort-by=.metadata.creationTimestamp"* ]]
+    [[ "$output" == *"Executing: kubectl  get events --sort-by=.metadata.creationTimestamp"* ]]
 }
 
 @test "[TEST] dry run with args events --byage" {
     run kubesort events --byage --dry
     [ "$status" -eq 0 ]
-    [[ "$output" == *"Executing: kubectl  get events  --sort-by=.metadata.creationTimestamp"* ]]
+    [[ "$output" == *"Executing: kubectl  get events --sort-by=.metadata.creationTimestamp"* ]]
 }
 
 @test "[TEST] dry run with args events --bysize" {
