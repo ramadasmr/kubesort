@@ -20,7 +20,7 @@ Whether you're a developer, SRE, or DevOps engineer, `kubesort` makes it easier 
 
 #### 📥 Installation
 
-**Install via `curl`:**
+##### Install via `curl`
 
 ```bash
 curl -sSL https://raw.githubusercontent.com/ramadasmr/kubesort/main/install.sh | bash
@@ -28,7 +28,7 @@ curl -sSL https://raw.githubusercontent.com/ramadasmr/kubesort/main/install.sh |
 
 This installs the kubesort command to /usr/local/bin. Make sure it’s in your PATH.
 
-**Manual Steps**
+##### Manual Steps
 
 ```bash
 curl -L -o /usr/local/bin/kubesort https://raw.githubusercontent.com/ramadasmr/kubesort/refs/heads/main/kubesort
@@ -36,7 +36,7 @@ chmod a+x /usr/local/bin/kubesort
 
 ```
 
-**Verify installation**
+##### Verify installation
 
 ```bash
 kubesort --help
@@ -105,6 +105,15 @@ PRs and issues are welcome to enhance sorting support, resource types, or flags.
 3. Commit your changes
 4. Push to your fork: `git push origin feature/my-feature`
 5. Open a pull request
+
+##### How to run tests
+
+This project uses [BATS](https://github.com/bats-core/bats-core) for testing.
+To run the tests, use the `bats` binary included in the repository:
+
+```bash
+./tests/bats/bin/bats tests
+```
 
 ##### Ideas to Improve
 - Add support for additional resource types
