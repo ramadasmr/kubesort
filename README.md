@@ -80,11 +80,11 @@ These are valid for pods, events, and services:
 #### ✅ Examples
 
 ```bash
-ksort pods --byage
-ksort nodes --bymemory
-ksort pv --bysize
-ksort pods -n kube-system --byrestart
-ksort services -n dev --byname
+kubesort pods --byage
+kubesort nodes --bymemory
+kubesort pv --bysize
+kubesort pods -n kube-system --byrestart
+kubesort services -n dev --byname
 ```
 
 #### ℹ️ Notes
