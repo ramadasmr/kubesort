@@ -26,7 +26,7 @@ Whether you're a developer, SRE, or DevOps engineer, `kubesort` makes it easier 
 curl -sSL https://raw.githubusercontent.com/ramadasmr/kubesort/main/install.sh | bash
 ```
 
-This installs the kubesort command to /usr/local/bin. Make sure it’s in your PATH.
+This installs the kubesort command to /usr/local/bin. Make sure it’s in your $PATH.
 
 ##### Manual Steps
 
