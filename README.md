@@ -1,5 +1,7 @@
 # kubesort
-![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg) ![Shell](https://img.shields.io/badge/Made%20with-Bash-orange.svg) ![CI](https://img.shields.io/badge/CI-GitHub%20Actions-blueviolet) ![Unit Tests](https://img.shields.io/badge/Unit%20Tests-GitHub%20Actions-blueviolet) ![CI Status](https://github.com/ramadasmr/kubesort/actions/workflows/ci.yaml/badge.svg?branch=main) ![GitHub Stars](https://img.shields.io/github/stars/ramadasmr/kubesort?style=social)
+![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg) ![Shell](https://img.shields.io/badge/Made%20with-Bash-red.svg) ![Kubernetes](https://img.shields.io/badge/Made%20for-Kubernetes-blue.svg) ![CI](https://img.shields.io/badge/CI-GitHub%20Actions-blueviolet) ![Unit Tests](https://img.shields.io/badge/Unit%20Tests-shellcheck%20and%20BATS-blueviolet) ![CI Status](https://github.com/ramadasmr/kubesort/actions/workflows/ci.yaml/badge.svg?branch=main)
+
+![GitHub Stars](https://img.shields.io/github/stars/ramadasmr/kubesort?style=social) ![GitHub Forks](https://img.shields.io/github/forks/ramadasmr/kubesort?style=social)
 
 
 **kubesort** is a lightweight Bash utility that simplifies and extends `kubectl` commands by enabling flexible sorting of Kubernetes resources. It combines multiple common `kubectl` flags (like `--sort-by`) into a single intuitive cli command.
