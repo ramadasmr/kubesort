@@ -131,7 +131,7 @@ if [[ "$#" -gt 0 ]]; then
         --byrestart)
             if [ -z "$SORTING" ]; then
                 SORTBYRESTART=YES
-                SORTKIND="size"
+                SORTKIND="restart"
                 SORTING=YES
             else
                 MULTISORT=YES
@@ -142,7 +142,7 @@ if [[ "$#" -gt 0 ]]; then
         --bystatus)
             if [ -z "$SORTING" ]; then
                 SORTBYSTATUS=YES
-                SORTKIND="size"
+                SORTKIND="status"
                 SORTING=YES
             else
                 MULTISORT=YES
