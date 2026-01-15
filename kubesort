@@ -48,6 +48,7 @@ init_variables(){
     SORTKIND=""
     SORTING=""
     DRYRUN=""
+    DEBUG=""
     SORTOPTS=()
     CMDOPTS=()
 }
@@ -201,6 +202,10 @@ if [[ "$#" -gt 0 ]]; then
                 echo "ERROR: cannot use arguments together with pods, nodes, pv etc"
                 found_wrong_command_args
             fi
+            shift
+            ;;
+        -v|--verbose|--debug)
+            DEBUG=YES
             shift
             ;;
         --dry)
