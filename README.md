@@ -20,6 +20,13 @@ Whether you're a developer, SRE, or DevOps engineer, `kubesort` makes it easier 
 
 ---
 
+#### 📋 Prerequisites
+
+- `kubectl` must be installed and configured to access your Kubernetes cluster
+- Bash shell (version 4.0 or higher)
+
+---
+
 #### 📥 Installation
 
 ##### Install via `curl`
@@ -72,6 +79,13 @@ Common Sort Options
 | `--byrestart`          | Sort by restart count (pods only)     |
 | `--bystatus`           | Sort by status (pods, nodes, pv)    |
 
+Additional Options
+
+| Option                | Description                               |
+|------------------------|-------------------------------------------|
+| `--dry`                | Dry run mode - shows the kubectl command without executing it |
+| `--debug`, `--verbose`, `-v` | Enable verbose/debug output |
+
 Namespace Support
 These are valid for pods, events, and services:
 
@@ -82,11 +96,23 @@ These are valid for pods, events, and services:
 #### ✅ Examples
 
 ```bash
+# Sort pods by age
 kubesort pods --byage
+
+# Sort nodes by memory usage
 kubesort nodes --bymemory
+
+# Sort persistent volumes by disk size
 kubesort pv --bysize
+
+# Sort pods in a specific namespace by restart count
 kubesort pods -n kube-system --byrestart
+
+# Sort services in a namespace by name
 kubesort services -n dev --byname
+
+# Dry run to see the command that would be executed
+kubesort pods --bycpu --dry
 ```
 
 #### ℹ️ Notes
@@ -118,5 +144,6 @@ To run the tests, use the `bats` binary included in the repository:
 ```
 
 ##### Ideas to Improve
-- Add support for additional resource types
-- Add unit tests or linting
+- Add support for additional resource types (deployments, statefulsets, etc.)
+- Add support for multilevel sorting
+- Add reverse/descending sort option
