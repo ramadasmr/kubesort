@@ -22,7 +22,7 @@ Whether you're a developer, SRE, or DevOps engineer, `kubesort` makes it easier 
 
 #### 📋 Prerequisites
 
-- `kubectl` must be installed and configured to access your Kubernetes cluster
+- `kubectl` must be installed, available in your `PATH`, and configured to access your Kubernetes cluster
 - Bash shell (version 4.0 or higher)
 
 ---
