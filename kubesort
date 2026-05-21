@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -e
+set -euo pipefail
 
 print_help_banner(){
 cat <<EOF
@@ -49,6 +49,8 @@ init_variables(){
     SORTING=""
     DRYRUN=""
     DEBUG=""
+    MULTISORT=""
+    ACTION=""
     SORTOPTS=()
     CMDOPTS=()
 }
@@ -307,6 +309,9 @@ build_command_options(){
 }
 
 execute_command(){
+    if [ "$DEBUG" == "YES" ]; then
+        echo "DEBUG: object=$OBJECT namespace=${NAMESPACE:-} sort_kind=${SORTKIND:-} dryrun=${DRYRUN:-}"
+    fi
     echo "Executing: kubectl ${CMDOPTS[*]} $ACTION $OBJECT ${SORTOPTS[*]}"
     if [ "$DRYRUN" == "YES" ]; then
         echo "DRY RUN: Skipping command execution"
